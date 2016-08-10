@@ -778,14 +778,14 @@ GameServer.prototype.willCollide = function (pos, size) {
 };
 
 GameServer.prototype.remergeTick = function () {
-	for (var i in this.clients) {
-		var client = this.clients[i].playerTracker;
-		for (var j = 0; j < client.cells.length; j++) {
-            var cell1 = client.cells[j];
-			if (cell1 === null || cell1.isRemoved) continue;
-			cell1.updateRemerge(this);
-		}
-	}
+     for (var i in this.clients) {
+	  var client = this.clients[i].playerTracker;
+	  for (var j = 0; j < client.cells.length; j++) {
+               var cell1 = client.cells[j];
+	       if (cell1 === null || cell1.isRemoved) continue;
+	       cell1.updateRemerge(this);
+	  }
+     }
 };
 
 // Checks cells for collision.
