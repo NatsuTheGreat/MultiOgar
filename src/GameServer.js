@@ -648,6 +648,7 @@ GameServer.prototype.mainLoop = function () {
     // Loop main functions
     if (this.run) {
         this.updateMoveEngine();
+        this.remergeTick();
         if ((this.getTick() % this.config.spawnInterval) == 0) {
             this.updateFood();  // Spawn food
             this.updateVirus(); // Spawn viruses
@@ -774,6 +775,17 @@ GameServer.prototype.willCollide = function (pos, size) {
         function (item) {
             return item.cell.cellType == 0; // check players only
         });
+};
+
+GameServer.prototype.remergeTick = function () {
+	for (var i in this.clients) {
+		var client = this.clients[i].playerTracker;
+		for (var j = 0; j < client.cells.length; j++) {
+            var cell1 = client.cells[j];
+			if (cell1 === null || cell1.isRemoved) continue;
+			cell1.updateRemerge(this);
+		}
+	}
 };
 
 // Checks cells for collision.
@@ -945,7 +957,6 @@ GameServer.prototype.updateMoveEngine = function () {
             var cell1 = client.cells[j];
             if (cell1.isRemoved)
                 continue;
-            cell1.updateRemerge(this);
             cell1.moveUser(this.border);
             cell1.move(this.border);
             
