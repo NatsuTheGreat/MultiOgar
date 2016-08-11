@@ -738,7 +738,7 @@ GameServer.prototype.spawnPlayer = function (player) {
             // Spawn from ejected mass
             var index = (this.nodesEjected.length - 1) * Math.random() >>> 0;
             var eject = this.nodesEjected[index];
-            if (!eject.isRemoved && eject.boostDistance === 0) {
+            if (!eject.isRemoved && !eject.isMoving) {
                 this.removeNode(eject);
                 pos = {
                     x: eject.position.x,
